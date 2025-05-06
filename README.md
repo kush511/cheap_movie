@@ -1,12 +1,46 @@
-# React + Vite
+# 🎬 Movie Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive movie browsing website built with **React.js** and powered by the **TMDB API**.
 
-Currently, two official plugins are available:
+Search your favorite movies, view trending titles, and explore  movies all in a sleek and intuitive UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Browse **trending** movies
+- **Search** movies by name
+- Responsive design for desktop and mobile
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend**: React.js, CSS
+- **API**: [TMDB API](https://www.themoviedb.org/documentation/api)
+
+---
+
+## 📸 Demo
+
+
+[Watch demo video] On my X profile : @kush5511
+
+---
+
+## 🔗 Live Demo
+
+
+## 📁 Getting Started
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/kush511/cheap_movie.git
+   cd frontend
+
+Install dependencies:
+npm i
+
+ENTER YOUR API KEY in cheap_movie/src/services/api.js
+
+Then start the server : npm run dev
