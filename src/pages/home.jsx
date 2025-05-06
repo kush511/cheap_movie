@@ -8,12 +8,15 @@ function Home() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     const loadPopularMovies = async () => {
       try {
-        const popularMovies = await getPopularMovies();
-        setMovies(popularMovies);
+        const data = await getPopularMovies(currentPage);
+        setMovies(data.results);
+        setTotalPages(data.totalPages);
       } catch (err) {
         console.log(err);
         setError("Failed to load movies...");
@@ -23,23 +26,41 @@ function Home() {
     };
 
     loadPopularMovies();
-  }, []);
+  }, [currentPage]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return
-    if (loading) return
+    if (!searchQuery.trim()) return;
+    if (loading) return;
 
-    setLoading(true)
+    setLoading(true);
     try {
-        const searchResults = await searchMovies(searchQuery)
-        setMovies(searchResults)
-        setError(null)
+      const data = await searchMovies(searchQuery, 1);
+      setMovies(data.results);
+      setTotalPages(data.totalPages);
+      setCurrentPage(1);
+      setError(null);
     } catch (err) {
-        console.log(err)
-        setError("Failed to search movies...")
+      console.log(err);
+      setError("Failed to search movies...");
     } finally {
-        setLoading(false)
+      setLoading(false);
+    }
+  };
+
+  const handlePageChange = async (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setLoading(true);
+    try {
+      const data = searchQuery
+        ? await searchMovies(searchQuery, newPage)
+        : await getPopularMovies(newPage);
+      setMovies(data.results);
+      setCurrentPage(newPage);
+    } catch (err) {
+      setError("Failed to load page...");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,16 +79,38 @@ function Home() {
         </button>
       </form>
 
-        {error && <div className="error-message">{error}</div>}
+      {error && <div className="error-message">{error}</div>}
 
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
-        <div className="movies-grid">
-          {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-        </div>
+        <>
+          <div className="movies-grid">
+            {movies.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </div>
+          
+          <div className="pagination">
+            <button
+              className="pagination-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous Page
+            </button>
+            <span className="page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="pagination-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next Page
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
