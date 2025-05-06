@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import Moviecard from './components/moviecard'
+import Moviecard from './components/MovieCard'
 import Home from './pages/home'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+import "./css/App.css"
 import Favorites from './pages/favorites'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/navbar'
